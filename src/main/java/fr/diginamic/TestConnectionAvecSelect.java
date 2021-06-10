@@ -20,6 +20,7 @@ public class TestConnectionAvecSelect {
 		Connection conn = null;
 		Statement stat = null;
 		ResultSet result = null;
+
 		try {
 			// 1 - je charge le driver
 			DriverManager.registerDriver(new Driver());
@@ -39,21 +40,16 @@ public class TestConnectionAvecSelect {
 				Article article = new Article(id, designation, reference);
 				listeArticles.add(article);
 			}
+
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());
 		} finally {
 			try {
-				if (result != null) {
-					result.close();
-				}
-				if (stat != null) {
-					stat.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
+				result.close();
+				stat.close();
+				conn.close();
 			} catch (SQLException e) {
-				System.err.println("Problème de fermeture des ressources :" + e.getMessage());
+				System.err.println("Erreur lors de la fermeture des ressources d'accès à la BDD");
 			}
 		}
 
