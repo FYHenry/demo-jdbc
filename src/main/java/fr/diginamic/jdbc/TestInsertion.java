@@ -16,11 +16,11 @@ public class TestInsertion {
 		try {
 			DriverManager.registerDriver(new Driver());
 			conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/compta", "root", "");
-			stat = conn.prepareStatement("DELETE FROM FOURNISSEUR WHERE NOM=?");
-			stat.setString(1, "Coucou");
+			stat = conn.prepareStatement("INSERT INTO FOURNISSEUR (NOM) VALUES (?)");
+			stat.setString(1, "La Maison de la Peinture");
 
-			int nb = stat.executeUpdate("DELETE FROM FOURNISSEUR WHERE NOM='La Maison des Peintures'");
-			System.out.println("Nombre de lignes supprimées: " + nb);
+			int nb = stat.executeUpdate();
+			System.out.println("Nombre de lignes insérées: " + nb);
 
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());

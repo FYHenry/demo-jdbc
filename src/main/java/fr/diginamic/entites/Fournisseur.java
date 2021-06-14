@@ -17,6 +17,16 @@ public class Fournisseur {
 	/**
 	 * Constructeur
 	 * 
+	 * @param nom nom du fournisseur
+	 */
+	public Fournisseur(String nom) {
+		super();
+		this.nom = nom;
+	}
+
+	/**
+	 * Constructeur
+	 * 
 	 * @param id  identifiant du fournisseur
 	 * @param nom nom du fournisseur
 	 */

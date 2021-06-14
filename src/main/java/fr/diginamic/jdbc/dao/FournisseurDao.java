@@ -45,4 +45,12 @@ public interface FournisseurDao {
 	 */
 	boolean delete(Fournisseur fournisseur);
 
+	/**
+	 * Extrait le fournisseur dont le nom est passé en paramètre
+	 * 
+	 * @param nom nom du fournisseur
+	 * @return {@link Fournisseur}
+	 */
+	Fournisseur extraireParNom(String nom);
+
 }

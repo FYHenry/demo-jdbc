@@ -1,4 +1,4 @@
-package fr.diginamic.jdbc;
+package fr.diginamic.jdbc.utils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,7 +14,7 @@ import org.mariadb.jdbc.Driver;
  * données. IMPORTANT: les paramètres d'accès à la base de données sont dans le
  * fichier database.xml
  * 
- * @author RichardBONNAMY
+ * @author DIGINAMIC
  *
  */
 public class ConnectionMgr {
