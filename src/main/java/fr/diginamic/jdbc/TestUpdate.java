@@ -1,7 +1,5 @@
 package fr.diginamic.jdbc;
 
-import fr.diginamic.jdbc.entites.Fournisseur;
-
 import java.util.Scanner;
 
 public class TestUpdate {
