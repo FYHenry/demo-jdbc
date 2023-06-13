@@ -10,4 +10,12 @@ public class Fournisseur {
     public String toString(){
         return String.format("{%d, %s}", this.ID, this.nom);
     }
+
+    public int getId() {
+        return ID;
+    }
+
+    public String getNom() {
+        return nom;
+    }
 }
