@@ -44,7 +44,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>fr.diginamic.jdbc.TestConnexionJdbc</mainClass>
+                            <mainClass>fr.diginamic.jdbc.TestInsertion</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
