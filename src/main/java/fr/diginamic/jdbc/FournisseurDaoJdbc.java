@@ -3,11 +3,7 @@ package fr.diginamic.jdbc;
 import fr.diginamic.jdbc.dao.FournisseurDao;
 import fr.diginamic.jdbc.entites.Fournisseur;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -43,19 +39,17 @@ public class FournisseurDaoJdbc implements FournisseurDao {
     }
 
     @Override
-    public void insert(Fournisseur fournisseur) {
+    public void insert(Fournisseur fournisseur){
+        final String query = "INSERT INTO FOURNISSEUR (ID, NOM) VALUES (?, ?)";
         try (final Connection connection =
                      DriverManager.getConnection(unix_socket,
                              user,
                              this.password);
-             final Statement statement = connection.createStatement()) {
-            final String query = String.format("INSERT INTO FOURNISSEUR" +
-                    " (ID, NOM) VALUES (%d, '%s')",
-                    fournisseur.getId(),
-                    fournisseur.getNom());
-            int insertNbr = statement.executeUpdate(query);
+             final PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, fournisseur.getId());
+            ps.setString(2, fournisseur.getNom());
             System.out.printf("Lignes insérées dans la table FOURNISSEUR : %d",
-                    insertNbr);
+                    ps.executeUpdate());
         } catch(SQLException ex) {
             System.err.println(ex.getLocalizedMessage());
         }
@@ -64,19 +58,19 @@ public class FournisseurDaoJdbc implements FournisseurDao {
 
     @Override
     public int update(String ancienNom, String nouveauNom) {
+        final String query = "UPDATE FOURNISSEUR SET NOM=? WHERE NOM=?";
         try (final Connection connection =
                      DriverManager.getConnection(unix_socket,
                              user,
                              this.password);
-             final Statement statement = connection.createStatement()) {
-            final String query = String.format("UPDATE FOURNISSEUR" +
-                            " SET NOM='%s' WHERE NOM='%s'",
-                    nouveauNom,
-                    ancienNom);
-            int insertNbr = statement.executeUpdate(query);
-            System.out.printf("Lignes remplacées dans la table FOURNISSEUR : %d",
-                    insertNbr);
-            return insertNbr;
+             final PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, nouveauNom);
+            ps.setString(2, ancienNom);
+            final int INSERT_NBR = ps.executeUpdate();
+            System.out.printf("Lignes remplacées dans " +
+                            "la table FOURNISSEUR : %d\n",
+                    INSERT_NBR);
+            return INSERT_NBR;
         } catch(SQLException ex) {
             System.err.println(ex.getLocalizedMessage());
             return 0;
@@ -85,16 +79,15 @@ public class FournisseurDaoJdbc implements FournisseurDao {
 
     @Override
     public boolean delete(Fournisseur fournisseur) {
+        final String query = "DELETE FROM FOURNISSEUR WHERE ID=? AND NOM=?";
         try (final Connection connection =
                      DriverManager.getConnection(unix_socket,
                              user,
                              this.password);
-             final Statement statement = connection.createStatement()) {
-            final String query = String.format("DELETE FROM FOURNISSEUR" +
-                    " WHERE ID=%d AND NOM='%s'",
-                    fournisseur.getId(),
-                    fournisseur.getNom());
-            return statement.execute(query);
+             final PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, fournisseur.getId());
+            ps.setString(2, fournisseur.getNom());
+            return ps.execute();
         } catch(SQLException ex) {
             System.err.println(ex.getLocalizedMessage());
             return false;
